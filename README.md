@@ -12,6 +12,7 @@ DAO+Service+Contoller 三层架构
 ## 说明
 docs 文件夹存放开发日志
 
-ngixTlias 文件夹存放前端工程
+nginxTlias 文件夹存放前端工程
 
-
+双击 ngixTlias 下 nginx.exe 启动前端工程, 访问 http://localhost:90/ 即可打开界面
+在 IDEA 中运行 MyTlias 后端工程, 前端页面即可正常显示页面.

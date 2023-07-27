@@ -18,6 +18,14 @@ public class EmpServiceImpl implements EmpService {
     EmpMapper empMapper;
 
     @Override
+    public boolean checkIn(Employee employee) {
+        String username = employee.getUsername();
+        String password = employee.getPassword();
+        int cnt = empMapper.getUsrByNamePwd(username, password);
+        return cnt > 0;
+    }
+
+    @Override
     public PageBean queryPage(QueryArg arg) {
         // 使用page helper
         // 1. 规定页码, 页大小
