@@ -35,7 +35,7 @@
     <select id="getEmpById" resultType="com.example.mytlias.pojo.Employee">
         select * from emp where id=#{id}
     </select>
-    <select id="getUsrByNamePwd" resultType="java.lang.Integer">
-        select count(*) from emp where username=#{username} and password=#{password}
+    <select id="getUsrByNamePwd" resultType="com.example.mytlias.pojo.Employee">
+        select * from emp where username=#{username} and password=#{password}
     </select>
 </mapper>

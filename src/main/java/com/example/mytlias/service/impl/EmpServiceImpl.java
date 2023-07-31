@@ -18,11 +18,10 @@ public class EmpServiceImpl implements EmpService {
     EmpMapper empMapper;
 
     @Override
-    public boolean checkIn(Employee employee) {
+    public Employee checkIn(Employee employee) {
         String username = employee.getUsername();
         String password = employee.getPassword();
-        int cnt = empMapper.getUsrByNamePwd(username, password);
-        return cnt > 0;
+        return empMapper.getUsrByNamePwd(username, password);
     }
 
     @Override

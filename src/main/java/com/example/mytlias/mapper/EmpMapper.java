@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface EmpMapper {
-    int  getUsrByNamePwd(String username,  String password);
+    Employee  getUsrByNamePwd(String username,  String password);
 
     List<Employee> queryPage(QueryArg arg); // 改为条件分页查询
 
