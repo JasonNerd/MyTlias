@@ -129,6 +129,110 @@ jwt 一般形式:
 **使用JWT令牌**
 
 引入 jjwt 依赖, 
+```xml
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt</artifactId>
+    <version>0.9.1</version>
+</dependency>
+```
+生成令牌:
+```java
+void jwtGenerate() {
+    // 1. payload
+    Map<String, Object> payload = new HashMap<>();
+    payload.put("Mike", 2);
+    payload.put("Silicon", "important");
+    // 2. secret
+    String secret = "rainbow";
+    // 2. generate jwt
+    String jwt = Jwts.builder()
+            .setClaims(payload)         // 添加载荷
+            .signWith(SignatureAlgorithm.HS256, secret)     // 签名算法以及密钥
+            .setExpiration(new Date(System.currentTimeMillis()+3*60*1000))    // 有效时间, 例如这里是 3min
+            .compact();
+    System.out.println(jwt);
+}
+```
+JWT校验时使用的签名秘钥，必须和生成JWT令牌时使用的秘钥是配套的。
+如果JWT令牌解析校验时报错，则说明 JWT令牌被篡改 或 失效了，令牌非法。
+```java
+void jwtParse(){
+    String secret = "rainbow";
+    // 刚刚生成的令牌, 注意有效期 3min
+    String jwt = "eyJhbGciOiJIUzI1NiJ9." +
+            "eyJNaWtlIjoyLCJTaWxpY29uIjoiaW1wb3J0YW50IiwiZXhwIjoxNjkwNjMzOTIxfQ." +
+            "ka47GykiAGfRHUrQA6vmXsqdVqI5sBovJa9QInFYErA";
+    Claims claims = Jwts.parser()
+            .setSigningKey(secret)
+            .parseClaimsJws(jwt)
+            .getBody();
+    System.out.println(claims);
+    // {Mike=2, Silicon=important, exp=1690633921}
+    System.out.println(new Date(1690633921));
+}
+```
 
-
-
+### 登录校验
+编写一个 jwt 工具类, 它包含将认证信息编码为 jwt 字串以及解码 jwt 字符串到 认证信息的两个方法
+```java
+public class JwtUtils {
+    private static final String secret = "rainbow";     // sign secret
+    private static final long expire = 12*60*60*1000;   // 12 hours
+    public static String jwtGenerate(Map<String, Object> payload) {
+        return Jwts.builder()
+                .setClaims(payload)
+                .signWith(SignatureAlgorithm.HS256, secret)
+                .setExpiration(new Date(System.currentTimeMillis()+expire))
+                .compact();
+    }
+    public static Claims jwtParse(String jwt){
+        return Jwts.parser()
+                .setSigningKey(secret)
+                .parseClaimsJws(jwt)
+                .getBody();
+    }
+}
+```
+将登录的一系列代码改为:
+```java
+// login controller
+@Slf4j
+@RestController
+public class LoginController {
+    @Autowired
+    private EmpService empService;
+    @PostMapping("/login")
+    public Result login(@RequestBody Employee employee){
+        log.info("Login info: usr={}, pwd={}", employee.getUsername(), employee.getPassword());
+        Employee e = empService.checkIn(employee);
+        if (e != null) {
+            // 生成一个 JWT令牌 作为响应结果
+            Map<String, Object> payload = new HashMap<>();
+            payload.put("id", e.getId());
+            payload.put("name", e.getName());
+            payload.put("username", e.getUsername());
+            String jwt = JwtUtils.jwtGenerate(payload);
+            return Result.success(jwt);
+        } else return Result.error("用户名或密码错误");
+    }
+}
+// EmpService
+Employee checkIn(Employee employee);
+// EmpServiceImpl
+@Override
+public Employee checkIn(Employee employee) {
+    String username = employee.getUsername();
+    String password = employee.getPassword();
+    return empMapper.getUsrByNamePwd(username, password);
+}
+// EmpMapper
+Employee  getUsrByNamePwd(String username,  String password);
+```
+sql 语句
+```xml
+<select id="getUsrByNamePwd" resultType="com.example.mytlias.pojo.Employee">
+    select * from emp where username=#{username} and password=#{password}
+</select>
+```
+此时重新启动项目, 再进行登录操作, 会发现响应数据中就有了 jwt 令牌。
