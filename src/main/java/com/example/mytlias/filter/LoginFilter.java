@@ -15,7 +15,7 @@ import java.io.IOException;
 
 // servlet 注解, servlet 属于 JavaWeb 要素, 但并非 SpringBoot 组件, 因此需要在 Application 添加 servlet 支持
 @Slf4j
-@WebFilter("/*")
+//@WebFilter("/*")
 public class LoginFilter implements Filter {
     // 初始化方法, 只执行一次
     @Override
