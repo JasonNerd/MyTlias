@@ -24,4 +24,7 @@ public interface DeptMapper {
 
 
     void update(Department department);
+
+    @Delete("delete from emp where dept_id=#{id}")
+    void deleteEmpByDept(Integer id);
 }

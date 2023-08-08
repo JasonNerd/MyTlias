@@ -1,6 +1,7 @@
 package com.example.mytlias.service;
 
 import com.example.mytlias.pojo.Department;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
