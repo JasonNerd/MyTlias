@@ -31,3 +31,7 @@ target/
 *.pid
 nginxTlias/temp/
 *.yml
+*.iml
+*.xml
+*.properties
+

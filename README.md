@@ -10,7 +10,9 @@ lombok
 DAO+Service+Contoller 三层架构
 
 ## 说明
-docs 文件夹存放开发日志
+docs 文件夹存放开发日志, 实际应称为听课笔记
+
+log 开发日志
 
 nginxTlias 文件夹存放前端工程
 
