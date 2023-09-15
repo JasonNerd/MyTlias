@@ -1,4 +1,4 @@
-package com.mytlias.vra;
+package com.rainbow.mytliasvra;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

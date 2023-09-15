@@ -1,6 +1,6 @@
-package com.mytlias.vra.dao;
+package com.rainbow.mytliasvra.dao;
 
-import com.mytlias.vra.entity.Employee;
+import com.rainbow.mytliasvra.entity.Employee;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

@@ -1,8 +1,8 @@
-package com.mytlias.vra.controller;
+package com.rainbow.mytliasvra.controller;
 
-import com.mytlias.vra.entity.Employee;
-import com.mytlias.vra.entity.Result;
-import com.mytlias.vra.service.EmpService;
+import com.rainbow.mytliasvra.entity.Employee;
+import com.rainbow.mytliasvra.entity.Result;
+import com.rainbow.mytliasvra.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

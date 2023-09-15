@@ -1,8 +1,8 @@
-package com.mytlias.vra.service.impl;
+package com.rainbow.mytliasvra.service.impl;
 
-import com.mytlias.vra.dao.EmpMapper;
-import com.mytlias.vra.entity.Employee;
-import com.mytlias.vra.service.EmpService;
+import com.rainbow.mytliasvra.dao.EmpMapper;
+import com.rainbow.mytliasvra.entity.Employee;
+import com.rainbow.mytliasvra.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;

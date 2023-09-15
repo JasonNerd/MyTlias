@@ -1,4 +1,4 @@
-package com.mytlias.vra;
+package com.rainbow.mytliasvra;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
