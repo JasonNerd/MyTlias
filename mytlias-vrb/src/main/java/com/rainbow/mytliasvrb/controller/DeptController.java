@@ -14,7 +14,9 @@ public class DeptController {
     private DeptService deptService;
     @GetMapping("/depts")
     public Result getAllDepartments(){
-        log.info("getAllDepartments获取所有的部门信息");
+        log.info("DeptController.getAllDepartments(): 获取所有的部门信息");
         return Result.success(deptService.getAllDepartments());
     }
+
+
 }
