@@ -31,4 +31,15 @@ public class DeptServiceImpl implements DeptService {
         dp.setUpdateTime(LocalDateTime.now());
         deptMapper.add(dp);
     }
+
+    @Override
+    public Department getDeptById(Integer id) {
+        return deptMapper.getDeptById(id);
+    }
+
+    @Override
+    public void updateDept(Department dp) {
+        dp.setUpdateTime(LocalDateTime.now());
+        deptMapper.updateDept(dp);      // 注意 dp 的未设置字段均为 null
+    }
 }

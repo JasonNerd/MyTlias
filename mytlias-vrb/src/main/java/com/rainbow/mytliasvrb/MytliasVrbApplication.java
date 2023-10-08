@@ -12,6 +12,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *          另外, sql 删除语法是: `delete from dept where id=#{id}`
  *      4. 添加了【新增部门】的接口, 请求方式为 post, 数据以json格式封装到请求体中, 直接使用实体进行接收
  *          另外, 需要在 service 层补足实体信息, 随后执行插入, 语法是 `insert into dept(xxx) values (#{xxx})`
+ *      5. 添加了【修改部门】的接口, 请求方式为 put, 数据以json格式封装到请求体中, 直接使用实体进行接收
+ *          另外, 需要在 service 层补足更新时间, 随后执行更新, 语法是
+ *          `update dept set col_a=#{attrA}, ... where id=#{id})`
  */
 @SpringBootApplication
 public class MytliasVrbApplication {

@@ -31,4 +31,17 @@ public class DeptController {
         deptService.add(dp);
         return Result.success();
     }
+
+    @GetMapping("/depts/{id}")
+    public Result getDeptById(@PathVariable Integer id){
+        log.info("依据id获取部门信息: {}", id);
+        Department dp = deptService.getDeptById(id);
+        return Result.success(dp);
+    }
+    @PutMapping("/depts")
+    public Result updateDept(@RequestBody Department dp){
+        log.info("修改部门(新数据): {}", dp);
+        deptService.updateDept(dp);
+        return Result.success();
+    }
 }
