@@ -17,4 +17,5 @@ public class QueryArg {
     LocalDate end;
     Integer page;
     Integer pageSize;
+//    Integer start;  // 记录起始处, 该字段在不使用pageHelper的情况下启用
 }

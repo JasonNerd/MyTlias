@@ -47,7 +47,37 @@ MyTlias-vrb 则进一步完善了关于部门数据的增删改查, 涉及到的
 `2023-10-08 16:29:07`:
 分页条件查询
 
+`2023-10-09 15:31:02`:
+先是完成了关于条件分页查询的无 pageHelper 实现, 需要用到动态SQL, 但：
+```sql
+limit 0, 10
+```
+和
+```sql
+order by entrydate desc
+```
+并不能共存
 
+`2023-10-09 15:34:44`:
+然后又完成了关于条件分页查询的 pageHelper 实现.
+它不需要 先查询符合条件的总记录数, 只需为 pageHelper 配置 页码和页大小即可完成分页.
+```xml
+<mapper namespace="com.rainbow.mytliasvrc.dao.EmpMapper">
+    <select id="queryPage" resultType="com.rainbow.mytliasvrc.entity.Employee">
+<!--        条件分页查询-->
+        select id, username, password, name, gender, image, job, entrydate,
+        dept_id, create_time, update_time from emp
+        <where>
+            <if test="name!=null and name!=''">name like concat('%', #{name}, '%')</if>
+            <if test="gender!=null">and gender = #{gender}</if>
+            <if test="begin!=null and end!=null">and entrydate between #{begin} and #{end}</if>
+        </where>
+        order by entrydate desc
+    </select>
+</mapper>
+```
+查询操作不包含分页参数.
 
-
+`2023-10-09 15:57:26`:
+批量删除员工, 请求参数示例: `/emps/1,2,3`, 使用到的 sql 语法包括 for-each
 

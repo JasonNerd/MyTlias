@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface EmpService {
     PageBean queryPage(QueryArg arg);
+
+    void delEmpByIds(List<Integer> ids);
 }
