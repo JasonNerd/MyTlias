@@ -7,10 +7,7 @@ import com.rainbow.mytliasvrc.entity.Result;
 import com.rainbow.mytliasvrc.service.EmpService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,5 +31,25 @@ public class EmpController {
         service.delEmpByIds(ids);
         return Result.success();
     }
+//      新增员工
+    @PostMapping("/emps")
+    public Result addEmp(@RequestBody Employee emp){
+        log.info("新增员工: {}", emp);
+        service.addEmp(emp);
+        return Result.success();
+    }
+//      依据 id 查询员工
+    @GetMapping("/emps/{id}")
+    public Result getEmpById(@PathVariable Integer id){
+        log.info("依据 id 查询员工信息: {}", id);
+        Employee emp = service.getEmpById(id);
+        return Result.success(emp);
+    }
 
+    @PutMapping("/emps")
+    public Result updateEmp(@RequestBody Employee emp){
+        log.info("修改员工信息: {}", emp);
+        service.updateEmp(emp);
+        return Result.success();
+    }
 }

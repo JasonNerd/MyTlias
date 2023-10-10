@@ -16,4 +16,11 @@ public interface EmpMapper {
     List<Employee> queryPage(QueryArg arg);
 
     void delEmpByIds(List<Integer> ids);
+
+    void addEmp(Employee emp);
+
+    @Select("select * from emp where id=#{id}")
+    Employee getEmpById(Integer id);
+
+    void updateEmp(Employee emp);
 }

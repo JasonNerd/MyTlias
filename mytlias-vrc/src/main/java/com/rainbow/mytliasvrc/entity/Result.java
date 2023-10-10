@@ -18,6 +18,6 @@ public class Result {
         return new Result(1, "success", null);
     }
     public static Result success(Object data){
-        return new Result(0, "success", data);
+        return new Result(1, "success", data);
     }
 }

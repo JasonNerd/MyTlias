@@ -10,6 +10,7 @@ import com.rainbow.mytliasvrc.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -37,5 +38,23 @@ public class EmpServiceImpl implements EmpService {
     @Override
     public void delEmpByIds(List<Integer> ids) {
         empMapper.delEmpByIds(ids);
+    }
+
+    @Override
+    public void addEmp(Employee emp) {
+        emp.setCreateTime(LocalDateTime.now());
+        emp.setUpdateTime(LocalDateTime.now());
+        empMapper.addEmp(emp);
+    }
+
+    @Override
+    public Employee getEmpById(Integer id) {
+        return empMapper.getEmpById(id);
+    }
+
+    @Override
+    public void updateEmp(Employee emp) {
+        emp.setUpdateTime(LocalDateTime.now());
+        empMapper.updateEmp(emp);
     }
 }
