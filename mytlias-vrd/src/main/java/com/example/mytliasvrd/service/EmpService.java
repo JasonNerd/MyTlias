@@ -17,4 +17,6 @@ public interface EmpService {
     Employee getEmpById(Integer id);
 
     void updateEmp(Employee emp);
+
+    Employee queryEmployee(Employee employee);
 }

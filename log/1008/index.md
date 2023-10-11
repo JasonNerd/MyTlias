@@ -88,3 +88,32 @@ order by entrydate desc
 新建立了 version-d 版本, 遇到了一些麻烦, 直接的文件复制还需要修改 import 语句以及 package 语句.
 另外, 在引入新的依赖后必须使用 maven rebiuld 一下.
 
+`2023-10-11 14:25:25`:
+尝试重启 aliyun.oss 服务.
+
+
+`2023-10-11 14:46:51`:
+通过 yml 定义一些全局设置, 在代码中则通过:
+`@Value("${aliyun.oss.endpoint}")`
+来进行赋值
+
+`2023-10-11 15:52:59`:
+应用很顺利, 总结步骤如下:
+1. 创建一个 aliyun oss 服务, 创建 bucket, 记录 id secret.
+2. 项目中引入aliyun oss 依赖, 注意使用 maven 重新编译.
+2. 按照官方的文件上传服务示例, 编写上传代码, 注意组装url.
+    ```py
+    String htp = "https://";
+    return htp+bucketName+'.'+endpoint.substring(htp.length())+storeFolder+newFileName;
+    ```
+3. 上传服务器的认证代理四要素在yml中配置, 使用`@Value`注解完成赋值.
+4. 随后创建处理请求的 controller, 编写上传接口.
+
+
+`2023-10-11 15:57:21`:
+接下来立即启动 login 验证服务.
+
+
+
+
+

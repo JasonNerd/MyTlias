@@ -23,4 +23,7 @@ public interface EmpMapper {
     Employee getEmpById(Integer id);
 
     void updateEmp(Employee emp);
+
+    @Select("select * from emp where username=#{username} and password=#{password}")
+    Employee queryEmployee(Employee employee);
 }
