@@ -1,5 +1,8 @@
 package com.example.mytliasvrd.util;
 
+import com.alibaba.fastjson.JSONObject;
+import com.example.mytliasvrd.entity.Result;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +16,24 @@ public class ReqInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // TODO: 放行逻辑编写
-        
+        // 放行逻辑编写
+        // 1. 尝试获取 jwt
+        String jwt = request.getHeader("token");
+        String failure = JSONObject.toJSONString(Result.error("NOT_LOGIN"));
+        if(jwt==null || jwt.equals("")){
+            log.info("未携带Token(未登录状态), 不予放行");
+            response.getWriter().write(failure);
+            return false;
+        }else {
+            try{
+                Claims by = JWTUtils.parse(jwt);
+            }catch (Exception e){
+                log.error("失效的JWT, 请重新登录");
+                response.getWriter().write(failure);
+                return false;
+            }
+        }
+        log.info("合法的JWT, 放行");
+        return true;
     }
 }

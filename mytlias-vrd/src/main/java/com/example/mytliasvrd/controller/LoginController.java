@@ -38,6 +38,6 @@ public class LoginController {
             log.info("生成jwt: {}", jwt);
             return Result.success(jwt);
         }
-        return Result.error("未登录(Not Login)");
+        return Result.error("账号或密码错误(Access Denied)");
     }
 }

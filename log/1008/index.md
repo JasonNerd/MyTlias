@@ -114,6 +114,35 @@ order by entrydate desc
 接下来立即启动 login 验证服务.
 
 
+`2023-10-13 14:51:52`:
+login 服务已完成, 总结步骤如下:
+1. 编写 LoginController, 专门接收登录请求.
+2. 接收到登录请求后, 使用请求体中的用户名和密码在数据库中查询.
+3. 查询成功则返回 token, token 记忆了登录状态, 并返回 token; 查询失败则返回错误信息.
+4. token 使用 JWT 令牌生成, 指定有效时间、签名算法、签名密钥, 最终的 token 是一个字符串.
+5. 此后, 客户端将服务器会返回的 token 保存到本地, 每次请求时将 token 放入请求头中.
+6. 服务器接收到请求后, 首先验证 token 是否有效, 有效则返回请求数据, 无效则返回错误信息.
+7. 服务器验证 token 有效性的方法是: 使用拦截器拦截指定的所有请求, 检查请求头中是否包含 token, 如果有则验证 token 是否有效, 有效则放行, 无效则返回错误信息. 关键代码如下:
+```java
+// 1. 编写一个类实现 HandlerInterceptor 接口.
+@Component
+public class ReqInterceptor implements HandlerInterceptor
+// 2. 在该类中重写 preHandle 方法, 编写放行逻辑
+@Override
+public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception
+// 3. 将该拦截器注册到 SpringMVC 中, 并指定拦截的路径
+@Configuration
+public class LoginCheckConfig implements WebMvcConfigurer {
+    @Autowired
+    private ReqInterceptor interceptor;
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        // 注册一个 ReqInterceptor, 拦截除了 login 以外所有的请求
+        registry.addInterceptor(interceptor).addPathPatterns("/**").excludePathPatterns("/login");
+    }
+}
+```
+
 
 
 

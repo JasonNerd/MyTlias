@@ -12,15 +12,14 @@ import java.util.Map;
  * 生成和校验令牌
  */
 public class JWTUtils {
-    @Value("${io.jsonwebtoken.secret}")
-    private static String secret;
-    private static final long expire = 12*60*60;    // 有效时间持续 12h
+    private final static String secret = "rainbow";
+    private static final long expire = 2*60*60*1000;    // 有效时间持续 2h
 
     public static String generate(Map<String, Object> payload){
         return Jwts.builder()
                 .setClaims(payload)
                 .setExpiration(new Date(System.currentTimeMillis()+expire))
-                .signWith(SignatureAlgorithm.ES256, secret)
+                .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
 
